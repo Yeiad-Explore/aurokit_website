@@ -142,6 +142,24 @@ body {
   mix-blend-mode: screen;
 }
 
+/* Specular reflective glare — tight bright highlight that rides the tilt */
+.glass-chromatic > .glass-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 450ms var(--ease-soft);
+  background: radial-gradient(
+    200px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.05) 38%,
+    transparent 65%
+  );
+  mix-blend-mode: overlay;
+}
+
 /* Pointer-following border illumination (on top, masked to edge) */
 .glass-chromatic > .glass-spot-edge {
   position: absolute;
@@ -167,8 +185,19 @@ body {
 }
 
 .glass-chromatic[data-spot="on"] > .glass-spot,
+.glass-chromatic[data-spot="on"] > .glass-glare,
 .glass-chromatic[data-spot="on"] > .glass-spot-edge {
   opacity: 1;
+}
+
+/* 3D tilt prep — perspective is applied per-frame via GSAP; suppress CSS transform transition
+   while GSAP owns the transform property so the two systems don't fight each other. */
+.glass-chromatic[data-tilt="on"] {
+  transition: box-shadow 500ms var(--ease-soft), border-color 500ms var(--ease-soft);
+  will-change: transform;
+}
+.glass-chromatic[data-tilt="on"]:hover {
+  transform: none;
 }
 
 .glass-chromatic:hover {
