@@ -124,6 +124,53 @@ body {
   z-index: 2;
 }
 
+/* Pointer-following ambient spotlight (behind content) */
+.glass-chromatic > .glass-spot {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 600ms var(--ease-soft);
+  background: radial-gradient(
+    460px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(216, 239, 234, 0.14),
+    rgba(199, 182, 230, 0.06) 28%,
+    transparent 62%
+  );
+  mix-blend-mode: screen;
+}
+
+/* Pointer-following border illumination (on top, masked to edge) */
+.glass-chromatic > .glass-spot-edge {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  padding: 1px;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-soft);
+  background: radial-gradient(
+    300px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(255, 255, 255, 0.55),
+    rgba(216, 239, 234, 0.30) 22%,
+    rgba(199, 182, 230, 0.12) 42%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+.glass-chromatic[data-spot="on"] > .glass-spot,
+.glass-chromatic[data-spot="on"] > .glass-spot-edge {
+  opacity: 1;
+}
+
 .glass-chromatic:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
