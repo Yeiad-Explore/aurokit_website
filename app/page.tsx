@@ -8,6 +8,8 @@ import Metrics from "@/components/Metrics";
 import Manifesto from "@/components/Manifesto";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import PipelineSandbox from "@/components/PipelineSandbox";
+import ROICalculator from "@/components/ROICalculator";
 import SmoothScroll from "@/components/SmoothScroll";
 import Reveals from "@/components/Reveals";
 
@@ -22,9 +24,11 @@ export default function HomePage() {
       <Hero />
       <TrustStrip />
       <Capabilities />
+      <PipelineSandbox />
       <Process />
       <Showcase />
       <Metrics />
+      <ROICalculator />
       <Manifesto />
       <CTA />
       <Footer />

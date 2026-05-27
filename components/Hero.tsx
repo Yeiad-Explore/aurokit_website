@@ -2,10 +2,19 @@
 
 import { useEffect, useRef } from "react";
 import HeroShader from "./HeroShader";
-import { gsap } from "@/lib/gsap";
+import { gsap, applyMagneticEffect } from "@/lib/gsap";
 
 export default function Hero() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const primaryRef = useRef<HTMLAnchorElement>(null);
+  const secondaryRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const cleanups: Array<() => void> = [];
+    if (primaryRef.current) cleanups.push(applyMagneticEffect(primaryRef.current));
+    if (secondaryRef.current) cleanups.push(applyMagneticEffect(secondaryRef.current, 0.28));
+    return () => cleanups.forEach((fn) => fn());
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -81,11 +90,11 @@ export default function Hero() {
 
         {/* CTAs */}
         <div className="hero-cta mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a href="#contact" className="btn-primary">
+          <a ref={primaryRef} href="#contact" className="btn-primary">
             Start an engagement
             <span className="btn-arrow">→</span>
           </a>
-          <a href="#process" className="btn-secondary">
+          <a ref={secondaryRef} href="#process" className="btn-secondary">
             How we work
             <span className="btn-arrow text-white/55">→</span>
           </a>

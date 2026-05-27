@@ -66,6 +66,11 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(18px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'pulse-down': {
+          '0%': { transform: 'scaleY(0)', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'scaleY(1)', opacity: '0.8' },
+        },
       },
     },
   },

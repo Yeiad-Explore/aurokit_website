@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import { applyMagneticEffect } from "@/lib/gsap";
 const LINKS = [
   { label: "Capabilities", href: "#capabilities" },
   { label: "Process", href: "#process" },
@@ -11,12 +11,18 @@ const LINKS = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const bookRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!bookRef.current) return;
+    return applyMagneticEffect(bookRef.current, 0.3);
   }, []);
 
   return (
@@ -54,6 +60,7 @@ export default function Navbar() {
         </ul>
 
         <a
+          ref={bookRef}
           href="#contact"
           className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[12px] font-medium text-ink-deep transition-transform duration-300 hover:scale-[1.02]"
         >
